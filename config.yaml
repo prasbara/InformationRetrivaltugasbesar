@@ -1,0 +1,13 @@
+embedding_model: sentence-transformers/all-MiniLM-L6-v2
+llm_provider: openrouter
+llm_model: llama3
+openrouter_model: openai/gpt-oss-20b:free
+temperature: 0.1
+top_p: 0.9
+max_tokens: 1024
+repeat_penalty: 1.1
+context_window: 4096
+chunk_size: 700
+chunk_overlap: 150
+top_k_retrieval: 5
+database_path: database/chroma/
