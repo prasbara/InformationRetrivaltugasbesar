@@ -1,4 +1,8 @@
-# Local AI Campus Assistant 🎓
+<div align="center">
+
+# 🎓 Local AI Campus Assistant
+
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Outfit&size=24&pause=1000&color=4F46E5&center=true&vCenter=true&width=600&height=50&lines=Your+local+academic+guidebook+oracle.;100%25+local.+0%25+data+leaks.;Powered+by+Llama+3+%26+ChromaDB;Because+reading+200+pages+is+too+hard.)](https://git.io/typing-svg)
 
 [![Python Version](https://img.shields.io/badge/python-3.12%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -6,6 +10,8 @@
 [![Database: ChromaDB](https://img.shields.io/badge/VectorDB-ChromaDB-blueviolet)](https://github.com/chroma-core/chroma)
 [![LLM Runtime: Ollama](https://img.shields.io/badge/Ollama-Llama_3-orange?logo=ollama&logoColor=white)](https://ollama.com/)
 [![Open Source](https://img.shields.io/badge/Open_Source-❤-red)](https://github.com/)
+
+</div>
 
 Tired of reading through a 200-page academic guidebook just to check if you can wear sandals to class or how many credits you need to graduate? We were too. 
 
