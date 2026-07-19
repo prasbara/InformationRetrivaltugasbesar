@@ -7,31 +7,33 @@
 [![LLM Runtime: Ollama](https://img.shields.io/badge/Ollama-Llama_3-orange?logo=ollama&logoColor=white)](https://ollama.com/)
 [![Open Source](https://img.shields.io/badge/Open_Source-❤-red)](https://github.com/)
 
-A local Retrieval-Augmented Generation (RAG) system that provides accurate answers from university regulations and academic documents using semantic search and local LLM inference. Designed to run 100% privately on consumer hardware without leaking sensitive campus data.
+Tired of reading through a 200-page academic guidebook just to check if you can wear sandals to class or how many credits you need to graduate? We were too. 
+
+**Local AI Campus Assistant** is a local Retrieval-Augmented Generation (RAG) system that reads university regulations so you don't have to. It utilizes semantic vector search and local LLM inference to answer campus-related questions with high accuracy—all while running 100% privately on consumer hardware (no cloud API bills, no data leakage).
 
 ---
 
 ## ✨ Features
 
-- 🔋 **100% Local RAG Pipeline**: Complete privacy with local embeddings and LLM inference.
-- 📂 **Multi-Format Knowledge Base**: Built-in support for parsing and clean indexing of `.pdf`, `.docx`, `.txt`, and `.md` files.
-- 🔍 **Semantic Vector Search**: Dense retrieval powered by sentence-transformers and cosine similarity.
-- 💾 **Persistent Vector Database**: Fast initialization and storage with a persistent ChromaDB instance.
-- 🤖 **Ollama Integration**: Seamless integration with local runtimes to run state-of-the-art models like Llama 3.
-- 🛡️ **Strict Prompt Guardrails**: Engineered prompt system that prevents hallucinations, rejects off-topic queries, and blocks prompt injection.
-- 🏷️ **Citation Support**: Grounded AI responses featuring file-name, page, and chunk indexing citations.
-- 🌊 **Streaming Responses**: Real-time word-by-word streaming generation for a smooth user experience.
-- 🔄 **Automatic Document Indexing**: Streamlined pipelines to rebuild, clear, and analyze document collections via Web UI or CLI.
-- 🧩 **Modular Architecture**: Clean, production-ready Python separation of concerns for loading, cleaning, chunking, and database operations.
+- 🔋 **100% Local RAG Pipeline**: Run embedding models and LLMs entirely on your machine. Keep university academic data where it belongs—on local storage.
+- 📂 **Multi-Format Knowledge Base**: Built-in support to parse, sanitize, and index `.pdf`, `.docx`, `.txt`, and `.md` files.
+- 🔍 **Semantic Vector Search**: Advanced dense retrieval powered by Sentence Transformers and cosine similarity. It understands what you mean, not just the keywords you type.
+- 💾 **Persistent Vector Database**: Uses ChromaDB to persist indexes so you don't waste CPU cycles re-indexing every time you ask a question.
+- 🤖 **Ollama Integration**: Seamless integration with local model backends to run state-of-the-art weights (like Llama 3 8B). Turn your laptop into an AI powerhouse *(airplane fan noises included)*.
+- 🛡️ **Strict Prompt Guardrails**: Hardened instructions that block prompt injections, reject off-topic questions, and prevent hallucinations. (No, you cannot ask it to write poetry or code for your other assignments).
+- 🏷️ **Citation Support**: Grounded AI responses featuring file-name, page, and chunk indexing citations. Always know exactly where the answer came from to verify correctness.
+- 🌊 **Streaming Responses**: Real-time token streaming for a responsive, modern chat interface.
+- 🔄 **Automatic Document Indexing**: Rebuild, clear, and inspect document collections easily via the Streamlit web dashboard or terminal CLI.
+- 🧩 **Modular Architecture**: Clean, production-ready Python separation of concerns for loading, text-cleaning, chunking, and database operations.
 
 ---
 
 ## 🏗️ Architecture & Pipelines
 
-This system decouples heavy offline pre-processing from fast online querying.
+This system splits work into two distinct pipelines: offline preprocessing (indexing) and online real-time querying (retrieval).
 
 ### 1. Offline Indexing Pipeline
-Reads unstructured files, cleans them, chunks them to fit context windows, generates embeddings, and saves them to vector database.
+Ingests raw files, cleans noise, cuts text into overlapping chunks, generates embeddings, and saves them into the vector DB.
 ```text
 PDF / DOCX / TXT / MD
       ↓
@@ -47,7 +49,7 @@ PDF / DOCX / TXT / MD
 ```
 
 ### 2. Online Retrieval Pipeline
-Processes user queries in real-time, finds matching document chunks, constructs a strict prompt context, and obtains a structured response from the LLM.
+Processes user queries in real-time, retrieves matching document chunks, builds a strict context window, and streams a citation-backed response from the LLM.
 ```text
 User Question
       ↓
@@ -66,13 +68,14 @@ User Question
 
 ## 📦 Technology Stack
 
-- **Language**: Python 3.12+
-- **RAG Orchestrator**: LangChain Core & Community
-- **Embeddings Generator**: Sentence Transformers (`all-MiniLM-L6-v2`)
-- **Vector DB Store**: ChromaDB (Persistent DB)
-- **Local Model Host**: Ollama (Llama 3 8B Instruct)
-- **API Model Host (Fallback)**: OpenRouter (Llama 3 8B Instruct Cloud API)
-- **Frontend Dashboard**: Streamlit (Premium UI layout)
+- **Language**: Python 3.12+ (The glue of AI)
+- **RAG Orchestrator**: LangChain Core & Community (The brain)
+- **Embeddings Generator**: Sentence Transformers (`all-MiniLM-L6-v2`) (The mapmaker)
+- **Vector DB Store**: ChromaDB (The storage vault)
+- **Local Model Host**: Ollama (The muscle)
+- **API Model Host (Fallback)**: OpenRouter Cloud API (The fallback backup)
+- **Frontend Dashboard**: Streamlit (The face)
+- **Fuel**: ☕ Coffee and upcoming exam anxiety.
 
 ---
 
@@ -81,7 +84,7 @@ User Question
 ### Embedding & Chunking Configuration
 | Parameter | Value | Description |
 | :--- | :--- | :--- |
-| **Model** | `sentence-transformers/all-MiniLM-L6-v2` | Light, fast, 384-dimensional dense retriever (~90MB) |
+| **Model** | `sentence-transformers/all-MiniLM-L6-v2` | Fast, 384-dimensional dense retriever (~90MB RAM footprint) |
 | **Chunk Size** | `700` | Max character length per text chunk |
 | **Chunk Overlap** | `150` | Characters shared between neighboring chunks to preserve context |
 | **Separators** | `["\n\n", "\n", " ", ""]` | Hierarchy used by recursive parser |
@@ -89,7 +92,7 @@ User Question
 ### LLM Inference Parameters
 | Parameter | Value | Description |
 | :--- | :--- | :--- |
-| **Default Model** | `llama3` (or `meta-llama/llama-3-8b-instruct:free` via cloud) | Llama 3 8B Instruct |
+| **Default Model** | `llama3` (local) or `meta-llama/llama-3-8b-instruct:free` (cloud) | Llama 3 8B Instruct |
 | **Temperature** | `0.1` | Low creativity to enforce deterministic context grounding |
 | **Top P** | `0.9` | Nucleus sampling probability threshold |
 | **Max Tokens** | `1024` | Maximum length of generated answer |
@@ -101,7 +104,7 @@ User Question
 
 ## 📂 Repository Structure
 
-The repository is structured following academic guidelines alongside modern open-source conventions:
+The repository is structured following both academic guidelines and modern open-source conventions:
 
 ```text
 InformationRetrivaltugasbesar/
@@ -164,7 +167,7 @@ graph TD
     F[User Query Input] --> G[Retrieve Top-K Cosine Chunks]
     E -.-> G
     G --> H[Construct Grounded Prompt]
-    H --> I[LLM Inference (Ollama/OpenRouter)]
+    H --> I["LLM Inference (Ollama/OpenRouter)"]
     I --> J[Streaming Response with Citations]
 ```
 
@@ -178,6 +181,12 @@ This system is engineered for **zero-hallucination** campus assistance:
 3. **No Hallucinated Rules**: AI will never guess or fabricate administrative regulations.
 4. **Prompt Injection Blocks**: System constraints override user instructions; any attempt to hijack the LLM to output non-academic topics is caught and neutralized.
 
+> [!IMPORTANT]
+> **Student-Proofing in Action**  
+> If a user asks: *"Bagaimana cara lulus tanpa ujian?"* (How do I graduate without taking exams?), the assistant will search the official guidelines, find no such loophole, and respond with:  
+> *"Maaf, informasi tersebut tidak ditemukan pada dokumen yang tersedia sehingga saya tidak dapat memberikan jawaban."*  
+> It won't make up rules to please the student.
+
 ---
 
 ## ⚡ Performance Characteristics
@@ -190,7 +199,20 @@ This system is engineered for **zero-hallucination** campus assistance:
 
 ## 🚀 Getting Started
 
-Please refer to the detailed [docs/User_Manual.md](docs/User_Manual.md) for quick-start directions covering virtual environments, Ollama local model downloads, custom document indexing, and user interface maps.
+Ready to run? Please refer to the detailed [docs/User_Manual.md](docs/User_Manual.md) for quick-start directions covering virtual environments, Ollama local model downloads, custom document indexing, and user interface maps.
+
+---
+
+## 🤪 Playful FAQ (Frequently Asked Questions)
+
+### Q: Can I ask the assistant who is going to win the next campus election?
+**A**: Only if the official 2016 academic senate regulations predicted it. (Spoiler: they didn't. Stick to asking about credit hours and GPA requirements!)
+
+### Q: Will this run on my potato laptop?
+**A**: Yes! We specifically chose the ultra-lightweight `all-MiniLM-L6-v2` embedding model (around 90MB of RAM) and optimized the text-splitting pipeline to handle files cleanly in batches of 100. If your computer can run Streamlit, it can run this. 
+
+### Q: Why did the assistant tell me it doesn't know the answer?
+**A**: That means the guardrails are working! Our prompt template explicitly forbids the AI from hallucinating rules. If it's not written in your uploaded files in `knowledge/`, the assistant won't invent it. Try copying the rules text into a `.txt` file, place it in `knowledge/`, and click **Re-index**!
 
 ---
 
