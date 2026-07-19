@@ -1,6 +1,11 @@
 """
-Script untuk re-indexing semua dokumen di folder documents/ ke ChromaDB.
-Jalankan: python scripts/reindex.py
+Module: reindex.py
+Purpose: Implements the offline pipeline to read documents, clean, chunk, embed, and index them into persistent ChromaDB storage.
+Inputs: User configuration details from config.yaml, text documents from knowledge/.
+Outputs: Log status prints to terminal, persistent SQLite/Chroma collection directories.
+Workflow: Reads config.yaml, deletes old database files, loads documents, cleans texts, segments them into chunks, loads HuggingFace embedding weights, connects to vector database, writes embeddings in batches.
+Dependencies: sys, os, yaml, internal helper modules.
+Complexity: Time: O(N * D) where N is number of chunks and D is embedding generation time; Space: O(N) database memory blocks.
 """
 import sys
 import os
@@ -27,8 +32,8 @@ def main():
     print("      OK - Database dihapus.")
 
     # Step 2: Baca dokumen
-    print("\n[2/6] Membaca dokumen dari documents/...")
-    docs, status = load_all_documents("documents/")
+    print("\n[2/6] Membaca dokumen dari knowledge/...")
+    docs, status = load_all_documents("knowledge/")
     print(f"      Ditemukan {len(status)} file, {len(docs)} halaman total.")
     for s in status:
         fname = s["filename"]
@@ -38,7 +43,7 @@ def main():
 
     if not docs:
         print("\nERROR: Tidak ada dokumen yang bisa dibaca!")
-        print("       Pastikan file PDF/DOCX/TXT ada di folder 'documents/'")
+        print("       Pastikan file PDF/DOCX/TXT ada di folder 'knowledge/'")
         sys.exit(1)
 
     # Step 3: Cleaning

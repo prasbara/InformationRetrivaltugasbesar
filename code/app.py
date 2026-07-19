@@ -1,3 +1,12 @@
+"""
+Module: app.py
+Purpose: Provides a premium Streamlit-based web interface for the Local AI Campus Assistant, featuring analytics, explorer pages, similarity checks, and chat history.
+Inputs: User configurations, chat inputs, database management signals.
+Outputs: Rendered dashboard panels, chatbot responses, document preview tables.
+Workflow: Configures Streamlit pages, applies custom CSS themes, sets up caches for embeddings and ChromaDB client, handles sidebar navigations, routes inputs, streams AI responses, and triggers database indexing routines.
+Dependencies: streamlit, os, yaml, pandas, pypdf, chromadb, internal helper modules.
+Complexity: Time: O(1) for dashboard rendering, O(U) for user inputs/queries; Space: O(C) cached structures.
+"""
 import streamlit as st
 import os
 import yaml
@@ -217,7 +226,7 @@ if "db_initialized" not in st.session_state or "total_chunks_count" not in st.se
 
 # Load document lists for global stats/explorer using fast metadata scan
 if "documents_loaded" not in st.session_state or st.session_state.documents_loaded is False:
-    status = scan_documents_fast("documents/")
+    status = scan_documents_fast("knowledge/")
     st.session_state.load_status = status
     st.session_state.documents_loaded = True
 
@@ -306,9 +315,9 @@ if page == "📊 Dashboard":
 
     # Database and indexing status warnings
     if total_docs > 0 and not st.session_state.db_initialized:
-        st.warning("⚠️ Dokumen terdeteksi di direktori 'documents/', tetapi belum dimasukkan ke database ChromaDB. Silakan pergi ke halaman **Settings** untuk memulai proses indexing.")
+        st.warning("⚠️ Dokumen terdeteksi di direktori 'knowledge/', tetapi belum dimasukkan ke database ChromaDB. Silakan pergi ke halaman **Settings** untuk memulai proses indexing.")
     elif total_docs == 0:
-        st.info("ℹ️ Belum ada dokumen di direktori 'documents/'. Silakan tambahkan file PDF, DOCX, TXT, atau MD ke folder tersebut.")
+        st.info("ℹ️ Belum ada dokumen di direktori 'knowledge/'. Silakan tambahkan file PDF, DOCX, TXT, atau MD ke folder tersebut.")
 
     # Detailed statistics on chunks
     if st.session_state.db_initialized and total_chunks > 0:
@@ -354,10 +363,10 @@ if page == "📊 Dashboard":
 
 elif page == "📁 Document Explorer":
     st.title("📁 Document Explorer")
-    st.write("Kelola dan telusuri dokumen kampus yang tersedia di direktori `documents/`.")
+    st.write("Kelola dan telusuri dokumen kampus yang tersedia di direktori `knowledge/`.")
     
     if not st.session_state.load_status:
-        st.info("Tidak ada file yang ditemukan dalam direktori `documents/`. Format yang didukung: PDF, DOCX, TXT, MD.")
+        st.info("Tidak ada file yang ditemukan dalam direktori `knowledge/`. Format yang didukung: PDF, DOCX, TXT, MD.")
     else:
         # Display loaded documents in a nice clean table
         df_docs = pd.DataFrame(st.session_state.load_status)
@@ -749,10 +758,10 @@ elif page == "⚙️ Settings":
                 with st.status("Memproses Dokumen RAG...", expanded=True) as status_box:
                     try:
                         status_box.update(label="1. Membaca Dokumen Kampus...", state="running")
-                        docs, load_status = load_all_documents("documents/")
+                        docs, load_status = load_all_documents("knowledge/")
                         
                         if not docs:
-                            raise ValueError("Tidak ada dokumen yang bisa dibaca. Pastikan dokumen diletakkan di direktori 'documents/'.")
+                            raise ValueError("Tidak ada dokumen yang bisa dibaca. Pastikan dokumen diletakkan di direktori 'knowledge/'.")
                             
                         status_box.update(label="2. Membersihkan Teks Dokumen...", state="running")
                         cleaned_docs = clean_documents(docs)

@@ -1,3 +1,12 @@
+"""
+Module: loader.py
+Purpose: Scans a directory and loads documents of various formats (PDF, DOCX, TXT, MD) into structured LangChain Document objects.
+Inputs: File path or directory path (string).
+Outputs: Tuple of loaded Document list and load status metadata list.
+Workflow: Scans folders, handles extension-specific parsing, extracts text page-by-page (for PDF) or paragraphs (for DOCX), structures metadata, and logs success/failures.
+Dependencies: os, typing, langchain_core.documents, pypdf, docx, src.logger.
+Complexity: Time: O(P) where P is total number of pages/files processed; Space: O(T) where T is total characters loaded into RAM.
+"""
 import os
 from typing import List, Dict, Any, Tuple
 from langchain_core.documents import Document

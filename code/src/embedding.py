@@ -1,3 +1,12 @@
+"""
+Module: embedding.py
+Purpose: Configures and instantiates the HuggingFace embedding model for local RAG execution.
+Inputs: Embedding model name (string).
+Outputs: HuggingFaceEmbeddings object.
+Workflow: Sets offline environment flags for Hugging Face, initializes the embeddings model using CPU, and sets normalization flags for cosine similarity.
+Dependencies: os, langchain_community.embeddings, src.logger.
+Complexity: Time: O(M) load time (~seconds, cached thereafter); Space: O(M) where M is model size (~90MB RAM).
+"""
 import os
 # Force HuggingFace to use local cache only — prevents hang on network check
 os.environ.setdefault("HF_HUB_OFFLINE", "1")

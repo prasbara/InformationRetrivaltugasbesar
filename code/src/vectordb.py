@@ -1,3 +1,12 @@
+"""
+Module: vectordb.py
+Purpose: Connects to and manages the persistent ChromaDB database, handling indexing, verification, clearing, and retrieval.
+Inputs: Embeddings model, database directory path, document chunks.
+Outputs: Chroma instance, status boolean, list of all chunks.
+Workflow: Resolves database paths, initializes persistent client, verifies collection states, batches additions to prevent RAM spikes, and handles schema deletion.
+Dependencies: os, shutil, typing, langchain_core.documents, langchain_community.vectorstores, langchain_core.embeddings, src.logger.
+Complexity: Time: O(N) where N is number of chunks indexed/read; Space: O(N) for batched writes.
+"""
 import os
 import shutil
 from typing import List, Dict, Any, Optional

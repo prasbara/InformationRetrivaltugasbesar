@@ -1,3 +1,12 @@
+"""
+Module: rag.py
+Purpose: Integrates local (Ollama) and cloud (OpenRouter) LLM providers to stream context-aware responses.
+Inputs: LLM provider (string), model name (string), prompt (string), hyperparameters (dict), API key (string).
+Outputs: Generator yielding streamed text response chunks.
+Workflow: Checks service status, structures request payloads, sends API queries via requests, and parses stream lines to yield content chunks.
+Dependencies: json, requests, typing, src.logger.
+Complexity: Time: O(T) where T is generation time; Space: O(1) stream buffer.
+"""
 import json
 import requests
 from typing import Generator, Dict, Any, List

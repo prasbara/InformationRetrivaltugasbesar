@@ -1,3 +1,12 @@
+"""
+Module: retriever.py
+Purpose: Connects to the vector database to search for top-K document chunks using Cosine Similarity.
+Inputs: Chroma vector store, user query (string), top_k count (int).
+Outputs: List of retrieved Document objects enriched with normalized similarity scores.
+Workflow: Executes similarity search, converts distances to cosine similarity scores, updates document metadata, and logs retrieval stats.
+Dependencies: typing, langchain_core.documents, langchain_community.vectorstores, src.logger.
+Complexity: Time: O(D * N) where D is embedding dimensions and N is number of database vectors (indexed search); Space: O(K) where K is number of returned documents.
+"""
 from typing import List
 from langchain_core.documents import Document
 from langchain_community.vectorstores import Chroma

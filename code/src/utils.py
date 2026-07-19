@@ -1,3 +1,12 @@
+"""
+Module: utils.py
+Purpose: Provides shared utility functions for file size formatting, chunk stat analysis, and HTML architecture visualization.
+Inputs: File size (int), document chunks list.
+Outputs: Formatted size string, statistics dict, pipeline HTML flowchart.
+Workflow: Converts bytes to human-readable size, calculates character metrics and distributions, and returns responsive styled HTML templates.
+Dependencies: math, typing, langchain_core.documents.
+Complexity: Time: O(C) for chunk statistics analysis; Space: O(C) for storing sizes.
+"""
 import math
 from typing import List, Dict, Any
 from langchain_core.documents import Document
@@ -110,7 +119,7 @@ def get_pipeline_html() -> str:
             <div class="step-num">1</div>
             <div class="step-content">
                 <div class="step-title">📂 Document Loading</div>
-                <div class="step-desc">Membaca dokumen dari folder <code>documents/</code> (PDF, DOCX, TXT, MD).</div>
+                <div class="step-desc">Membaca dokumen dari folder <code>knowledge/</code> (PDF, DOCX, TXT, MD).</div>
             </div>
         </div>
         <div class="arrow-down">⬇️</div>

@@ -1,3 +1,12 @@
+"""
+Module: prompt.py
+Purpose: Constructs formatted prompts for the LLM by combining retrieved context chunks with the user query, incorporating strict safety guardrails.
+Inputs: List of retrieved Document objects, user question (string).
+Outputs: Formatted prompt (string).
+Workflow: Loads the system prompt template, formats retrieved chunks with source, page, and chunk index tags, and builds the final RAG prompt.
+Dependencies: os, typing, langchain_core.documents, src.logger.
+Complexity: Time: O(C + Q) where C is context size and Q is query size; Space: O(C + Q).
+"""
 import os
 from typing import List
 from langchain_core.documents import Document

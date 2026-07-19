@@ -1,9 +1,11 @@
 # Environment & secrets
+code/.env
+code/*.env
 .env
 *.env
 
 # Python cache
-__pycache__/
+**/__pycache__/
 *.py[cod]
 *.pyo
 *.pyd
@@ -14,18 +16,22 @@ build/
 .eggs/
 
 # Virtual environments
+code/venv/
+code/env/
+code/.venv/
 venv/
-env/
 .venv/
+env/
 
 # ChromaDB vector database (generated, not source code)
-database/
+code/vector_db/
 
 # Logs
-logs/*.log
-logs/*.jsonl
+code/logs/*.log
+code/logs/*.jsonl
 
 # HuggingFace cache
+code/.cache/
 .cache/
 
 # OS files
@@ -38,4 +44,4 @@ desktop.ini
 .idea/
 
 # Streamlit
-.streamlit/secrets.toml
+code/.streamlit/secrets.toml

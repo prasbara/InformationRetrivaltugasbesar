@@ -1,3 +1,12 @@
+"""
+Module: config.py
+Purpose: Manages loading and saving application configurations from/to config.yaml, and retrieving API keys from environment variables.
+Inputs: Settings dictionary or key updates.
+Outputs: Dictionary of current configuration settings.
+Workflow: Defines default settings, loads configurations from config.yaml using a fallback merge with defaults, saves updated configurations back to YAML, and retrieves API keys.
+Dependencies: os, yaml, typing, dotenv.
+Complexity: Time: O(1) file reads/writes; Space: O(1) configuration data cache.
+"""
 import os
 import yaml
 from typing import Any, Dict
@@ -23,7 +32,7 @@ DEFAULT_CONFIG = {
     "chunk_size": 700,
     "chunk_overlap": 150,
     "top_k_retrieval": 5,
-    "database_path": "database/chroma/"
+    "database_path": "vector_db/chroma/"
 }
 
 def load_config() -> Dict[str, Any]:

@@ -10,4 +10,4 @@ context_window: 4096
 chunk_size: 700
 chunk_overlap: 150
 top_k_retrieval: 5
-database_path: database/chroma/
+database_path: vector_db/chroma/

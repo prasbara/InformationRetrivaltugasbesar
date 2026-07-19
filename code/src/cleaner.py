@@ -1,3 +1,12 @@
+"""
+Module: cleaner.py
+Purpose: Cleans document text by normalizing whitespaces and filtering out noise to improve vector storage and similarity retrieval accuracy.
+Inputs: List of LangChain Document objects or raw text strings.
+Outputs: List of cleaned Document objects or cleaned text strings.
+Workflow: Replaces non-breaking spaces, normalizes line endings, limits consecutive newlines, normalizes duplicate spaces, strips whitespace from each line, and filters out empty documents.
+Dependencies: re, typing, langchain_core.documents, src.logger.
+Complexity: Time: O(L) where L is the total length of text; Space: O(L) for creating the cleaned copy.
+"""
 import re
 from typing import List
 from langchain_core.documents import Document

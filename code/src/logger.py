@@ -1,3 +1,12 @@
+"""
+Module: logger.py
+Purpose: Establishes rotating logger systems for system errors, chat logs, and vector retrievals.
+Inputs: Log messages, chat messages, retrieval metrics.
+Outputs: Text file logs in logs/ directory.
+Workflow: Creates logs/ directory, initializes RotatingFileHandlers for system, chat, and retrieval logs, and format outputs.
+Dependencies: os, logging, logging.handlers.
+Complexity: Time: O(1) per log statement; Space: O(1) RAM, O(S) disk storage (max 5MB * 3 backups per log type).
+"""
 import os
 import logging
 from logging.handlers import RotatingFileHandler

@@ -1,3 +1,12 @@
+"""
+Module: splitter.py
+Purpose: Splits long cleaned documents into smaller chunks using recursive separators to fit the context window.
+Inputs: List of Document objects, chunk size (int), chunk overlap (int).
+Outputs: List of chunked Document objects with index markers.
+Workflow: Instantiates RecursiveCharacterTextSplitter, segments document text, updates metadata with unique chunk indices, and logs splitting output.
+Dependencies: typing, langchain_core.documents, langchain_text_splitters, src.logger.
+Complexity: Time: O(L) where L is total characters split; Space: O(L) for output chunks.
+"""
 from typing import List
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
